@@ -39,13 +39,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install library dependencies
-        run:
-
       - name: Build library
         run: npm install && npm run buildLibrary
 
-      - name: Install example dependencies
+      - name: Build example
         run: cd example && npm install && npm run build && cd ..
 
       - name: Upload artifact
