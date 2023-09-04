@@ -1,0 +1,68 @@
+{
+	"name": "xrkeys",
+	"version": "0.1.0",
+	"description": "Super performant WebXR keyboard",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build:src": "tsc && cp ./src/xrkeys.glb ./dist",
+		"build:example": "cd example && npm run build",
+		"build": "npm run build:src && npm run build:example",
+		"format": "prettier --write ./src/**/*",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepublishOnly": "npm run build",
+		"watch": "npm-watch"
+	},
+	"watch": {
+		"build:src": {
+			"patterns": [
+				"src"
+			],
+			"extensions": "ts",
+			"quiet": false
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/felixtrz/logxr.git"
+	},
+	"keywords": [
+		"game",
+		"html5",
+		"threejs",
+		"webxr",
+		"webvr",
+		"console",
+		"log",
+		"error",
+		"warn",
+		"info",
+		"debug",
+		"devtool",
+		"devtools"
+	],
+	"author": "Felix Zhang <felixtrz96@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/felixtrz/logxr/issues"
+	},
+	"homepage": "https://github.com/felixtrz/logxr#readme",
+	"devDependencies": {
+		"@types/node": "^18.7.13",
+		"@types/three": "^0.149.0",
+		"eslint": "^8.23.0",
+		"eslint-config-prettier": "^8.5.0",
+		"npm-watch": "^0.11.0",
+		"prettier": "^2.7.1",
+		"typescript": "^4.8.2"
+	},
+	"peerDependencies": {
+		"three": "^0.149.0"
+	},
+	"dependencies": {
+		"word-wrap": "^1.2.3"
+	}
+}
