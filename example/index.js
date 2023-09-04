@@ -60,9 +60,10 @@ function init() {
 				});
 				controller.add(xrConsole);
 				xrConsole.position.set(0, 0.26, -0.14);
-				console.log('Welcome to the XR Keys demo!');
+				console.info('Welcome to XRKeys demo!');
+				console.debug('Console powered by logxr');
 
-				XRKeys.create('assets/xrkeys.glb').then((instance) => {
+				XRKeys.create().then((instance) => {
 					xrkeys = instance;
 					controller.add(xrkeys);
 					xrkeys.addEventListener('keypress', (e) => {

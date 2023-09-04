@@ -38,6 +38,13 @@ const raycaster = new THREE.Raycaster();
 
 const loader = new GLTFLoader();
 
+export type XRKeysConfig = {
+	path?: string;
+	keyMaskOffset?: number;
+	hoverColor?: string;
+	pressedColor?: string;
+};
+
 export default class XRKeys extends THREE.Group {
 	private _keyboards: THREE.Mesh[] = [];
 
@@ -66,9 +73,18 @@ export default class XRKeys extends THREE.Group {
 
 	private _tempVec32 = new THREE.Vector3();
 
+	private _hoveredColor: string;
+
+	private _pressedColor: string;
+
 	public onEnter: (text: string) => {};
 
-	private constructor(model: THREE.Object3D, keyMaskOffset = 0.00001) {
+	private constructor(
+		model: THREE.Object3D,
+		keyMaskOffset = 0.00001,
+		hoveredColor = '#666E73',
+		pressedColor = '#ffffff',
+	) {
 		super();
 		const lowerCaseKeys = model.getObjectByName('lowercase') as THREE.Mesh;
 		const keysMaterial = new THREE.MeshBasicMaterial({
@@ -85,10 +101,7 @@ export default class XRKeys extends THREE.Group {
 
 		this._keyboards.push(lowerCaseKeys, upperCaseKeys, numbersKeys);
 
-		const keymaskMaterial = new THREE.MeshBasicMaterial({
-			transparent: true,
-			opacity: 0.5,
-		});
+		const keymaskMaterial = new THREE.MeshBasicMaterial();
 		this._keyMask = model.getObjectByName('shortkeymask') as THREE.Mesh;
 		this._longKeyMask = model.getObjectByName('longkeymask') as THREE.Mesh;
 		this._spaceKeyMask = model.getObjectByName('spacemask') as THREE.Mesh;
@@ -98,8 +111,15 @@ export default class XRKeys extends THREE.Group {
 		this._keyMask.position.y = keyMaskOffset;
 		this._longKeyMask.position.y = keyMaskOffset;
 		this._spaceKeyMask.position.y = keyMaskOffset;
+		this._keyMask.visible = false;
+		this._longKeyMask.visible = false;
+		this._spaceKeyMask.visible = false;
 
 		this._keys = model.children.filter((child) => child.name.startsWith('key'));
+
+		this._hoveredColor = hoveredColor;
+
+		this._pressedColor = pressedColor;
 
 		this.add(
 			...this._keyboards,
@@ -109,9 +129,11 @@ export default class XRKeys extends THREE.Group {
 		);
 	}
 
-	public static async create(path: string) {
-		const model = await loader.loadAsync(path);
-		return new XRKeys(model.scene);
+	public static async create(config: XRKeysConfig = {}) {
+		const model = await loader.loadAsync(
+			config.path ?? 'https://www.unpkg.com/xrkeys/dist/xrkeys.glb',
+		);
+		return new XRKeys(model.scene, config.keyMaskOffset);
 	}
 
 	public get activeKeyboard() {
@@ -133,7 +155,9 @@ export default class XRKeys extends THREE.Group {
 	) {
 		keyMask.position.set(key.position.x, 0.00001, key.position.z);
 		keyMask.visible = true;
-		(keyMask.material as THREE.MeshBasicMaterial).opacity = pressed ? 1 : 0.5;
+		(keyMask.material as THREE.MeshBasicMaterial).color.set(
+			pressed ? this._pressedColor : this._hoveredColor,
+		);
 		this._hoveredKey = { name: key.name, pressed };
 	}
 

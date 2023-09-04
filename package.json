@@ -35,21 +35,17 @@
 		"threejs",
 		"webxr",
 		"webvr",
-		"console",
-		"log",
-		"error",
-		"warn",
-		"info",
-		"debug",
+		"keyboard",
+		"input",
 		"devtool",
 		"devtools"
 	],
 	"author": "Felix Zhang <felixtrz96@gmail.com>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/felixtrz/logxr/issues"
+		"url": "https://github.com/felixtrz/xrkeys/issues"
 	},
-	"homepage": "https://github.com/felixtrz/logxr#readme",
+	"homepage": "https://github.com/felixtrz/xrkeys#readme",
 	"devDependencies": {
 		"@types/node": "^18.7.13",
 		"@types/three": "^0.149.0",
@@ -61,8 +57,5 @@
 	},
 	"peerDependencies": {
 		"three": "^0.149.0"
-	},
-	"dependencies": {
-		"word-wrap": "^1.2.3"
 	}
 }

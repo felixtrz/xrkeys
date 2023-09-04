@@ -1,5 +1,5 @@
 {
-	"name": "sndbx",
+	"name": "xrkeys-demo",
 	"private": true,
 	"devDependencies": {
 		"css-loader": "^5.2.1",
