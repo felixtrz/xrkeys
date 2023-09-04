@@ -40,7 +40,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build library
-        run: npm install && npm run buildLibrary
+        run: npm install && npm run build:src
 
       - name: Build example
         run: cd example && npm install && npm run build && cd ..
